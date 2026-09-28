@@ -1,8 +1,9 @@
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { ArrowRight } from 'lucide-react';
 
 import { FadeIn } from '@/components/index';
+
 import { CTAButton } from '../components/cta-button';
 
 export function HeroSection() {

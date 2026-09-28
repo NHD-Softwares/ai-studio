@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+import { FaFacebook, FaGoogle } from 'react-icons/fa';
+
 import { handleLogin } from '@/actions/auth';
+import { FadeIn } from '@/components/index';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent } from '@/components/ui/card';
-import { FadeIn } from '@/components/index';
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
 
 export const dynamic = 'force-static';
 

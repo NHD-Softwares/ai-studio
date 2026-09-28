@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import * as React from 'react';
 
 // Muting a next-themes issue that does not affect anything, waiting for an official fix from next themes.
 const originalError = console.error;

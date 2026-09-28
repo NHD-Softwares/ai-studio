@@ -1,17 +1,18 @@
-import { routing } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 
+import { AppLocales } from '@/globals';
+import { routing } from '@/i18n/routing';
+
 import {
-  HeroSection,
-  SocialProofSection,
-  HowItWorksSection,
   BeforeAfterSection,
   FeaturesSection,
-  TestimonialsSection,
-  PricingSection,
   FooterSection,
+  HeroSection,
+  HowItWorksSection,
+  PricingSection,
+  SocialProofSection,
+  TestimonialsSection,
 } from './sections';
-import { AppLocales } from '@/globals';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

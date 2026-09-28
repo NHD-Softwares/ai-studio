@@ -1,8 +1,9 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { redirect } from '@/i18n/navigation';
 import { getLocale } from 'next-intl/server';
+
+import { redirect } from '@/i18n/navigation';
 
 export async function handleLogin() {
   const locale = await getLocale();

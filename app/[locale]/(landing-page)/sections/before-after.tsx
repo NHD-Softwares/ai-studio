@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+
 import { BeforeAfterSlider, FadeIn } from '@/components/index';
 
 export function BeforeAfterSection() {

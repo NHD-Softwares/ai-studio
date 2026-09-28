@@ -2,8 +2,9 @@
 'use client';
 
 import { Link } from '@/i18n/navigation';
-import { ToggleTheme } from './ui/toggle-theme';
+
 import { LanguageSwitcher } from './language-switcher';
+import { ToggleTheme } from './ui/toggle-theme';
 
 export function Header() {
   return (

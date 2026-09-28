@@ -1,14 +1,14 @@
-import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-
-import { Inter, Cairo } from 'next/font/google';
-import { AppLocales } from '@/globals';
 import '../globals.css';
 
-import { cn } from '@/lib/utils';
-import { routing } from '@/i18n/routing';
+import { Cairo, Inter } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+
 import { ThemeProvider } from '@/components/index';
+import { AppLocales } from '@/globals';
+import { routing } from '@/i18n/routing';
+import { cn } from '@/lib/utils';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 

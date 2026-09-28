@@ -1,5 +1,6 @@
+import { Download, FolderPlus, Settings2, Type, UploadCloud } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { FolderPlus, UploadCloud, Settings2, Type, Download } from 'lucide-react';
+
 import { FadeIn } from '@/components/index';
 
 export function HowItWorksSection() {

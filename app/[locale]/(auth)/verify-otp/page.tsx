@@ -1,16 +1,17 @@
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent } from '@/components/ui/card';
+import { getTranslations } from 'next-intl/server';
+
 import { FadeIn } from '@/components/index';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
-import { ArrowLeft } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { Label } from '@/components/ui/label';
 
 export const dynamic = 'force-static';
 

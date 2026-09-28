@@ -2,6 +2,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 
 const eslintConfig = defineConfig([
@@ -10,13 +11,18 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       'unused-imports': unusedImports,
+      'simple-import-sort': simpleImportSort,
     },
     rules: {
-      // 3. Turn off standard unused vars to let the plugin handle it
+      // Set import sorting rules to warn instead of error
+      'simple-import-sort/imports': 'warn',
+      'simple-import-sort/exports': 'warn',
+
+      // Turn off built-in unused vars rules so unused-imports takes over
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
 
-      // 4. Set the specific plugin rules
+      // Configure unused-imports
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'warn',
@@ -28,13 +34,7 @@ const eslintConfig = defineConfig([
         },
       ],
 
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-        },
-      ],
+      // Other rules
       '@typescript-eslint/no-explicit-any': 'warn',
       '@next/next/no-html-link-for-pages': 'off',
       'react/no-unescaped-entities': 'off',
