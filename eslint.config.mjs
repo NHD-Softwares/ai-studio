@@ -41,6 +41,36 @@ const eslintConfig = defineConfig([
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
+  // ── Enforce centralized env access ────────────────────────────────────────
+  // Ban direct process.env access everywhere EXCEPT:
+  //   • lib/env.ts    – the single source of truth (reads process.env directly)
+  //   • instrumentation.ts – must read NEXT_RUNTIME from process.env
+  //
+  // All env vars must be read via `import { env } from '@/lib/env'`.
+  //
+  // The rule uses no-restricted-syntax to ban any MemberExpression that accesses
+  // a property on process.env that is NOT a NEXT_PUBLIC_ prefixed var.
+  // (NEXT_PUBLIC_ vars are inlined at build time in the client bundle and are
+  //  the only legitimate reason to read process.env outside lib/env.ts.)
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.mts'],
+    ignores: ['lib/env.ts', 'instrumentation.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          // Matches: process.env.SOME_VAR where SOME_VAR does NOT start with NEXT_PUBLIC_
+          // AST: MemberExpression { object: MemberExpression { object: process, property: env }, property: SOME_VAR }
+          selector:
+            "MemberExpression[object.object.name='process'][object.property.name='env']:not([property.name=/^NEXT_PUBLIC_/]):not([property.name='NEXT_RUNTIME'])",
+          message:
+            "Direct process.env access is banned outside lib/env.ts. " +
+            "Import from '@/lib/env' instead. " +
+            "Only NEXT_PUBLIC_ variables may be accessed via process.env in client components.",
+        },
+      ],
+    },
+  },
   prettier,
   globalIgnores([
     '.next/**',
@@ -50,7 +80,9 @@ const eslintConfig = defineConfig([
     'node_modules/**',
     '*.config.js',
     'public/**',
+    'scripts/**',
   ]),
 ]);
 
 export default eslintConfig;
+
