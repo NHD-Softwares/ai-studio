@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { getLocale } from 'next-intl/server';
 
 import { redirect } from '@/i18n/navigation';
+import { isProd } from '@/lib/env';
 
 export async function handleLogin() {
   const locale = await getLocale();
@@ -12,7 +13,7 @@ export async function handleLogin() {
 
   cookieStore.set('jwt_token', jwtToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isProd,
     path: '/',
   });
 
@@ -34,7 +35,7 @@ export async function handleSignup() {
 
   cookieStore.set('jwt_token', jwtToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isProd,
     path: '/',
   });
 

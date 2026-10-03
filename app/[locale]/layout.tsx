@@ -2,10 +2,10 @@ import '../globals.css';
 
 import { Cairo, Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
+import { hasLocale } from 'next-intl';
+import { getMessages, getTranslations } from 'next-intl/server';
 
-import { ThemeProvider } from '@/components/index';
+import Providers from '@/app/providers';
 import { AppLocales } from '@/globals';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
@@ -40,6 +40,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
+  const messages = await getMessages();
   const dir = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
@@ -55,16 +56,9 @@ export default async function LocaleLayout({ children, params }: Props) {
       )}
     >
       <body className="relative flex min-h-full flex-col">
-        <NextIntlClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="h-full">{children}</div>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <Providers locale={locale} messages={messages}>
+          <div className="h-full">{children}</div>
+        </Providers>
       </body>
     </html>
   );
