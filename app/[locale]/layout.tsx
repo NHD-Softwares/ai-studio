@@ -3,7 +3,7 @@ import '../globals.css';
 import { Cairo, Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import Providers from '@/app/providers';
 import { AppLocales } from '@/globals';
@@ -40,7 +40,9 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
-  const messages = await getMessages();
+  setRequestLocale(locale);
+
+  const messages = await getMessages({ locale });
   const dir = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (

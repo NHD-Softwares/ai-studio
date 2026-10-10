@@ -1,37 +1,64 @@
-import { NextRequest, NextResponse } from 'next/server';
-import createMiddleware from 'next-intl/middleware';
+import { type NextRequest, NextResponse } from 'next/server';
+import createIntlMiddleware from 'next-intl/middleware';
 
-import { AppLocales } from './globals';
 import { routing } from './i18n/routing';
 
-const intlMiddleware = createMiddleware(routing);
+const intlMiddleware = createIntlMiddleware(routing);
 
-export default async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+const SESSION_COOKIES = ['better-auth.session_token', '__Secure-better-auth.session_token'];
 
-  // Extract locale from path
-  const segments = pathname.split('/');
-  const currentLocale = segments[1];
-  const isSupportedLocale = routing.locales.includes(currentLocale as AppLocales);
-  const locale = isSupportedLocale ? currentLocale : routing.defaultLocale;
+const PROTECTED_PREFIX = '/app';
 
-  const token = request.cookies.get('jwt_token')?.value;
+const AUTH_ROUTES = ['/login', '/signup', '/forgot-password'];
 
-  const isAppRoute = request.nextUrl.pathname.startsWith(`/${locale}/app`);
+function splitLocale(pathname: string): { locale: string | null; path: string } {
+  const [, first, ...rest] = pathname.split('/');
+  const locale = (routing.locales as readonly string[]).includes(first) ? first : null;
+  return locale ? { locale, path: '/' + rest.join('/') } : { locale: null, path: pathname };
+}
 
-  if (!token && isAppRoute) {
-    return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+function isUnder(path: string, base: string) {
+  return path === base || path.startsWith(base + '/');
+}
+
+function clearSessionCookies(res: NextResponse) {
+  for (const name of SESSION_COOKIES) {
+    res.cookies.set(name, '', {
+      path: '/',
+      maxAge: 0,
+      secure: name.startsWith('__Secure-'),
+    });
+  }
+}
+
+export default function proxy(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl;
+  const { locale, path } = splitLocale(pathname);
+
+  if (!locale) return intlMiddleware(request);
+
+  const hasSession = SESSION_COOKIES.some((n) => request.cookies.has(n));
+
+  if (isUnder(path, PROTECTED_PREFIX) && !hasSession) {
+    const url = new URL(`/${locale}/login`, request.url);
+    return NextResponse.redirect(url);
   }
 
-  const authRoutes = ['login', 'signup', 'forgot-password'];
+  if (AUTH_ROUTES.some((r) => isUnder(path, r))) {
+    if (searchParams.get('session') === 'expired') {
+      const res = intlMiddleware(request);
+      clearSessionCookies(res);
+      return res;
+    }
 
-  if (token && authRoutes.includes(segments[2])) {
-    return NextResponse.redirect(new URL(`/${locale}/app`, request.url));
+    if (hasSession) {
+      return NextResponse.redirect(new URL(`/${locale}/app`, request.url));
+    }
   }
 
   return intlMiddleware(request);
 }
 
 export const config = {
-  matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)',
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 };
