@@ -7,9 +7,6 @@
     "title": "AI Studio",
     "description": "أطلق العنان لإنتاجيتك مع AI Studio"
   },
-  "HomePage": {
-    "title": "أهلاً بالعالم"
-  },
   "Landing": {
     "Hero": {
       "badge": "موثوق من قبل أكثر من 1,000 بائع",
@@ -38,14 +35,8 @@
     "Slider": {
       "title": "شاهد الفرق بنفسك",
       "solid": "مجسم (Solid)",
-      "solidBefore": "📦 خلفية جدار أبيض عادي",
-      "solidAfter": "✨ مشهد رخامي فاخر في الاستوديو",
       "wearable": "ملابس (Wearables)",
-      "wearableBefore": "👕 مطوية على كرسي",
-      "wearableAfter": "✨ منسقة بأسلوب المسطح مع إضاءة جذابة",
-      "mafraresh": "مفارش (Mafraresh)",
-      "mafrareshBefore": "🛏️ قماش مكدس على الأرض",
-      "mafrareshAfter": "✨ سرير مرتب بالكامل في مشهد دافئ"
+      "mafraresh": "مفارش (Mafraresh)"
     },
     "Features": {
       "title": "صُمم خصيصاً لبائعي التجارة الإلكترونية",
@@ -106,8 +97,6 @@
       "featCustomColor": "اختيار لون مخصص",
       "featPrompt": "مطالبات عربية/إنجليزية",
       "featPriority": "أولوية التوليد",
-      "featSupportCommunity": "دعم المجتمع",
-      "featSupportEmail": "دعم عبر البريد",
       "featSupportDedicated": "دعم مخصص",
       "ctaStarter": "ابدأ مجاناً",
       "ctaPro": "ابدأ تجربة برو",
@@ -115,10 +104,6 @@
     },
     "Footer": {
       "tagline": "صور منتجات احترافية للجميع.",
-      "product": "المنتج",
-      "features": "الميزات",
-      "pricing": "الأسعار",
-      "showcase": "معرض الأعمال",
       "company": "الشركة",
       "about": "من نحن",
       "blog": "المدونة",
@@ -131,8 +116,10 @@
   "Auth": {
     "common": {
       "or": "أو",
-      "socialGoogle": "سجل الدخول بواسطة جوجل",
-      "socialFacebook": "سجل الدخول بواسطة فيسبوك"
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور",
+      "logout": "تسجيل الخروج",
+      "loggingOut": "جاري تسجيل الخروج..."
     },
     "login": {
       "title": "أهلاً بك مجدداً",
@@ -144,7 +131,9 @@
       "forgotPassword": "هل نسيت كلمة المرور؟",
       "submit": "تسجيل الدخول",
       "noAccount": "ليس لديك حساب؟",
-      "signupLink": "إنشاء حساب"
+      "signupLink": "إنشاء حساب",
+      "rememberMe": "تذكرني",
+      "submitting": "جاري تسجيل الدخول..."
     },
     "signup": {
       "title": "إنشاء حساب جديد",
@@ -157,22 +146,61 @@
       "passwordPlaceholder": "على الأقل 8 أحرف",
       "submit": "إنشاء حساب",
       "haveAccount": "لديك حساب بالفعل؟",
-      "loginLink": "تسجيل الدخول"
+      "loginLink": "تسجيل الدخول",
+      "termsLabel": "أوافق على شروط الخدمة وسياسة الخصوصية",
+      "submitting": "جاري إنشاء الحساب..."
     },
-    "forgotPassword": {
+    "requestResetPassword": {
       "title": "نسيت كلمة المرور",
       "subtitle": "لا تقلق، سنساعدك على استعادتها",
       "backToLogin": "العودة لتسجيل الدخول",
-      "identifierLabel": "البريد أو الجوال",
-      "identifierPlaceholder": "أدخل البريد أو +20...",
-      "submit": "إرسال الرمز"
+      "submit": "إرسال ",
+      "submitting": "جاري الإرسال...",
+      "sentTitle": "تحقق من بريدك الإلكتروني",
+      "sentSubtitle": "إذا كان هناك حساب لهذا البريد، فقد أرسلنا رابطًا لإعادة تعيين كلمة المرور.",
+      "sentTo": "أرسلنا الرابط إلى",
+      "resend": "إعادة إرسال بريد إعادة تعيين كلمة المرور",
+      "resendIn": "إعادة الإرسال خلال {seconds}s",
+      "resent": "تم إرسال بريد آخر",
+      "changeEmail": "استخدام بريد مختلف",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "Example@email.com"
     },
-    "verifyOtp": {
-      "title": "تأكيد الرمز",
-      "subtitle": "لقد أرسلنا رمزاً مكوناً من 6 أرقام إلى {identifier}",
-      "otpLabel": "رمز التحقق",
-      "submit": "تأكيد ومتابعة",
-      "resend": "لم تستلم الرمز؟ <resendLink>إعادة إرسال</resendLink>"
+    "resetPassword": {
+      "title": "إعادة ضبط كلمة السر",
+      "subtitle": "أنشئ كلمة سر جديدة لحسابك أدناه.",
+      "passwordLabel": "كلمة السر الجديدة",
+      "passwordPlaceholder": "أدخل كلمة السر الجديدة",
+      "submit": "تحديث كلمة السر",
+      "rememberPassword": "العودة إلى",
+      "loginLink": "تسجيل الدخول",
+      "redirectNote": "بعد تحديث كلمة المرور، سيتم توجيهك إلى صفحة تسجيل الدخول.",
+      "submitting": "جاري التحديث...",
+      "redirecting": "جاري التوجيه إلى تسجيل الدخول...",
+      "success": "تم تحديث كلمة المرور. جاري نقلك إلى تسجيل الدخول.",
+      "invalidLinkTitle": "هذا الرابط غير صالح",
+      "invalidLinkMessage": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية. اطلب رابطاً جديداً للمتابعة.",
+      "requestNewLink": "طلب رابط جديد"
+    },
+    "checkEmail": {
+      "title": "تحقق من بريدك الإلكتروني",
+      "subtitle": "خطوة أخيرة قبل أن تبدأ.",
+      "sentTo": "أرسلنا رابط تحقق إلى",
+      "instructions": "اضغط على الرابط في البريد لتفعيل حسابك. هذه الصفحة تتحدث تلقائياً بعد التحقق.",
+      "resend": "إعادة إرسال بريد التحقق",
+      "resendIn": "إعادة الإرسال خلال {seconds}s",
+      "resent": "تم إرسال بريد التحقق. تحقق من بريدك الوارد والبريد المزعج.",
+      "checkAgain": "لقد تحققت، تحقق مرة أخرى",
+      "wrongEmail": "بريد إلكتروني خاطئ؟",
+      "signUpAgain": "إنشاء حساب مجدداً",
+      "notVerifiedYet": "لم يتم التحقق بعد. افتح الرابط في بريدك الإلكتروني، ثم حاول مرة أخرى.",
+      "noEmail": "لم نجد عنوان بريدك الإلكتروني.",
+      "backToLogin": "العودة لتسجيل الدخول"
+    },
+    "emailVerified": {
+      "title": "تم تفعيل حسابك بنجاح!",
+      "description": "الآن يمكنك استخدام التطبيق بالكامل.",
+      "cta": "اذهب للتطبيق"
     }
   }
 }

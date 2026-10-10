@@ -7,9 +7,6 @@
     "title": "AI Studio",
     "description": "Unleash your productivity with AI Studio"
   },
-  "HomePage": {
-    "title": "Hello world!"
-  },
   "Landing": {
     "Hero": {
       "badge": "Trusted by 1,000+ sellers",
@@ -38,14 +35,8 @@
     "Slider": {
       "title": "See the difference yourself",
       "solid": "Solid Object",
-      "solidBefore": "📦 Plain white wall background",
-      "solidAfter": "✨ Elegant studio marble scene",
       "wearable": "Wearables",
-      "wearableBefore": "👕 Folded on a chair",
-      "wearableAfter": "✨ Styled flat-lay with mood lighting",
-      "mafraresh": "Home Textiles",
-      "mafrareshBefore": "🛏️ Bundled fabric on the floor",
-      "mafrareshAfter": "✨ Fully made bed in a warm lifestyle scene"
+      "mafraresh": "Home Textiles"
     },
     "Features": {
       "title": "Built for E-commerce Sellers",
@@ -106,8 +97,6 @@
       "featCustomColor": "Custom color picker",
       "featPrompt": "AR/EN prompts",
       "featPriority": "Priority generation",
-      "featSupportCommunity": "Community Support",
-      "featSupportEmail": "Email Support",
       "featSupportDedicated": "Dedicated Support",
       "ctaStarter": "Get Started Free",
       "ctaPro": "Start Pro Trial",
@@ -115,10 +104,6 @@
     },
     "Footer": {
       "tagline": "Professional product photos for everyone.",
-      "product": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
-      "showcase": "Showcase",
       "company": "Company",
       "about": "About Us",
       "blog": "Blog",
@@ -131,20 +116,24 @@
   "Auth": {
     "common": {
       "or": "Or",
-      "socialGoogle": "Sign in with Google",
-      "socialFacebook": "Sign in with Facebook"
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "logout": "Log out",
+      "loggingOut": "Logging out..."
     },
     "login": {
       "title": "Welcome Back",
-      "subtitle": "Sign in to continue where you left off.",
+      "subtitle": "Log in to continue where you left off.",
       "emailLabel": "Email",
       "emailPlaceholder": "Example@email.com",
       "passwordLabel": "Password",
       "passwordPlaceholder": "At least 8 characters",
       "forgotPassword": "Forgot Password?",
-      "submit": "Sign in",
+      "submit": "Log in",
       "noAccount": "Don't you have an account?",
-      "signupLink": "Sign up"
+      "signupLink": "Sign up",
+      "rememberMe": "Remember me",
+      "submitting": "Signing in..."
     },
     "signup": {
       "title": "Create an Account",
@@ -157,22 +146,61 @@
       "passwordPlaceholder": "At least 8 characters",
       "submit": "Sign up",
       "haveAccount": "Already have an account?",
-      "loginLink": "Log in"
+      "loginLink": "Log in",
+      "termsLabel": "I agree to the Terms of Service and Privacy Policy",
+      "submitting": "Creating account..."
     },
-    "forgotPassword": {
+    "requestResetPassword": {
       "title": "Forgot Password",
       "subtitle": "Don't worry, we'll help you reset it",
       "backToLogin": "Back to Log in",
-      "identifierLabel": "Email or Mobile",
-      "identifierPlaceholder": "Enter email or +20...",
-      "submit": "Send Code"
+      "submit": "Submit",
+      "submitting": "Sending...",
+      "sentTitle": "Check your email",
+      "sentSubtitle": "If an account exists for this email, we've sent a link to reset your password.",
+      "sentTo": "We sent the link to",
+      "resend": "Resend reset email",
+      "resendIn": "Resend in {seconds}s",
+      "resent": "Another email is on its way.",
+      "changeEmail": "Use a different email",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Example@email.com"
     },
-    "verifyOtp": {
-      "title": "Verify Code",
-      "subtitle": "We've sent a 6-digit code to your {identifier}",
-      "otpLabel": "Verification Code",
-      "submit": "Verify & Continue",
-      "resend": "Didn't receive code? <resendLink>Resend</resendLink>"
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Create a new password for your account below.",
+      "passwordLabel": "New Password",
+      "passwordPlaceholder": "Enter your new password",
+      "submit": "Update Password",
+      "rememberPassword": "Back to ",
+      "loginLink": "Log in",
+      "redirectNote": "After your password is updated, you'll be redirected to login.",
+      "submitting": "Updating...",
+      "redirecting": "Redirecting to login...",
+      "success": "Password updated. Taking you to login.",
+      "invalidLinkTitle": "This link isn't valid",
+      "invalidLinkMessage": "The reset link is invalid or has expired. Request a new one to continue.",
+      "requestNewLink": "Request a new link"
+    },
+    "checkEmail": {
+      "title": "Check your email",
+      "subtitle": "One last step before you get started.",
+      "sentTo": "We sent a verification link to",
+      "instructions": "Click the link in the email to activate your account. This page updates automatically once you're verified.",
+      "resend": "Resend verification email",
+      "resendIn": "Resend in {seconds}s",
+      "resent": "Verification email sent. Check your inbox and spam folder.",
+      "checkAgain": "I've verified, check again",
+      "wrongEmail": "Wrong email?",
+      "signUpAgain": "Sign up again",
+      "notVerifiedYet": "Not verified yet. Open the link in your email, then try again.",
+      "noEmail": "We couldn't find your email address.",
+      "backToLogin": "Back to login"
+    },
+    "emailVerified": {
+      "title": "Account verified successfully!",
+      "description": "You can now use the app to its full potential.",
+      "cta": "Go to App"
     }
   }
 }
