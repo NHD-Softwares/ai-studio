@@ -7,12 +7,11 @@ const localHosts = ['localhost', '127.0.0.1', '0.0.0.0', '[::1]'];
 const clientShape = z.object({
   NODE_ENV: nodeEnv,
   NEXT_PUBLIC_NODE_ENV: nodeEnv,
-  NEXT_PUBLIC_APP_URL: z.string().url(),
+  NEXT_PUBLIC_APP_URL: z.url(),
+  NEXT_PUBLIC_API_URL: z.url(),
 });
 
-const serverShape = clientShape.extend({
-  JWT_ENCRYPTION_SECRET: z.string().min(32),
-});
+const serverShape = clientShape.extend({});
 
 function checkAppUrl(v: z.infer<typeof clientShape>, ctx: z.RefinementCtx) {
   if (v.NODE_ENV !== 'production' || !URL.canParse(v.NEXT_PUBLIC_APP_URL)) return;
@@ -30,13 +29,6 @@ const clientSchema = clientShape.superRefine(checkAppUrl);
 
 const serverSchema = serverShape.superRefine((v, ctx) => {
   checkAppUrl(v, ctx);
-  if (v.NODE_ENV === 'production' && v.JWT_ENCRYPTION_SECRET.length < 64) {
-    ctx.addIssue({
-      code: 'custom',
-      path: ['JWT_ENCRYPTION_SECRET'],
-      message: 'must be at least 64 characters in production',
-    });
-  }
 });
 
 export type Env = z.infer<typeof serverSchema>;
@@ -47,6 +39,7 @@ const rawEnv = {
   NODE_ENV: process.env.NODE_ENV,
   NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
 };
 
 const result = (isServer ? serverSchema : clientSchema).safeParse(rawEnv);
