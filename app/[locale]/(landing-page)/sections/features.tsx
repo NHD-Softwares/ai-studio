@@ -1,5 +1,6 @@
-import { Image as ImageIcon, Layers, Sparkles, Globe2, RefreshCcw, Coins } from 'lucide-react';
+import { Coins, Globe2, Image as ImageIcon, Layers, RefreshCcw, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+
 import { FadeIn } from '@/components/index';
 
 export function FeaturesSection() {

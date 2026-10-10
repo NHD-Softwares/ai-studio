@@ -1,5 +1,5 @@
-import { useTranslations } from 'next-intl';
 import { ShoppingCart, Star as Instagram } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function SocialProofSection() {
   const t = useTranslations('Landing');

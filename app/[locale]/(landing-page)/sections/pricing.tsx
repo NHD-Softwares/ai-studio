@@ -1,6 +1,6 @@
-import { useTranslations } from 'next-intl';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 import { FadeIn } from '@/components/index';
 

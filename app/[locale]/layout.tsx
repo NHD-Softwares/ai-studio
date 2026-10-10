@@ -1,14 +1,14 @@
-import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-
-import { Inter, Cairo } from 'next/font/google';
-import { AppLocales } from '@/globals';
 import '../globals.css';
 
-import { cn } from '@/lib/utils';
+import { Cairo, Inter } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import { hasLocale } from 'next-intl';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+
+import Providers from '@/app/providers';
+import { AppLocales } from '@/globals';
 import { routing } from '@/i18n/routing';
-import { Header, ThemeProvider } from '@/components/index';
+import { cn } from '@/lib/utils';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -40,6 +40,9 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
+  setRequestLocale(locale);
+
+  const messages = await getMessages({ locale });
   const dir = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
@@ -55,17 +58,9 @@ export default async function LocaleLayout({ children, params }: Props) {
       )}
     >
       <body className="relative flex min-h-full flex-col">
-        <NextIntlClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Header />
-            <div className="h-full">{children}</div>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <Providers locale={locale} messages={messages}>
+          <div className="h-full">{children}</div>
+        </Providers>
       </body>
     </html>
   );

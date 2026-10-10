@@ -1,8 +1,9 @@
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { ArrowRight } from 'lucide-react';
 
 import { FadeIn } from '@/components/index';
+
 import { CTAButton } from '../components/cta-button';
 
 export function HeroSection() {
@@ -37,6 +38,8 @@ export function HeroSection() {
 
         <FadeIn delay={0.6} direction="up">
           <div className="flex flex-col items-center gap-4 sm:flex-row">
+            <CTAButton content={t('Hero.ctaSecondary')} />
+
             <Link
               href="/app"
               className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground transition-transform hover:scale-105"
@@ -44,7 +47,6 @@ export function HeroSection() {
               {t('Hero.ctaPrimary')}
               <ArrowRight className="ms-2 h-5 w-5 rtl:-scale-x-100" />
             </Link>
-            <CTAButton content={t('Hero.ctaSecondary')} />
           </div>
         </FadeIn>
       </div>
