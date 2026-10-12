@@ -38,6 +38,7 @@ export function LoginForm() {
       },
       {
         onSuccess: ({ user }) => {
+          console.error('PINGGGGG !!!!!!!!!!!!');
           router.replace(
             user.emailVerified ? '/app' : `/verify?email=${encodeURIComponent(email)}`
           );
