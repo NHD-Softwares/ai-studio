@@ -25,6 +25,10 @@ const nextConfig: NextConfig = {
         source: '/api/v1/:path*',
         destination: 'https://ai-studio-ruddy.up.railway.app/api/v1/:path*',
       },
+      {
+        source: '/api/auth/:path*',
+        destination: 'https://ai-studio-ruddy.up.railway.app/api/auth/:path*',
+      },
     ];
   },
 };
