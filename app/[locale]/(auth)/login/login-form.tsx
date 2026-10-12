@@ -2,7 +2,7 @@
 
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -21,7 +21,7 @@ export function LoginForm() {
   const { signIn } = useAuth();
 
   const t = useTranslations('Auth.login');
-  const router = useRouter();
+  // const router = useRouter();
 
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -38,8 +38,7 @@ export function LoginForm() {
       },
       {
         onSuccess: ({ user }) => {
-          console.error('PINGGGGG !!!!!!!!!!!!');
-          router.replace(
+          window.location.replace(
             user.emailVerified ? '/app' : `/verify?email=${encodeURIComponent(email)}`
           );
         },
