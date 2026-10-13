@@ -1,14 +1,16 @@
-import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { FadeIn } from '@/components/index';
 import { Card, CardContent } from '@/components/ui/card';
+import { AppLocales } from '@/globals';
+import { Link } from '@/i18n/navigation';
 
 import { LoginForm } from './login-form';
 
-export const dynamic = 'force-static';
+export default async function LoginPage({ params }: { params: Promise<{ locale: AppLocales }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-export default async function LoginPage() {
   const t = await getTranslations('Auth.login');
   const common = await getTranslations('Auth.common');
 
@@ -38,9 +40,9 @@ export default async function LoginPage() {
             </div>
 
             <div className="mt-6 text-center text-sm text-muted-foreground">
-              {t('noAccount')}{' '}
+              {t('noAccount')}
               <Link
-                href="signup"
+                href={'/signup'}
                 className="font-bold text-primary transition-colors hover:text-primary/80"
               >
                 {t('signupLink')}

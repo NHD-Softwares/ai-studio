@@ -1,13 +1,19 @@
+import { setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import { FadeIn } from '@/components/index';
 import { Card } from '@/components/ui/card';
+import { AppLocales } from '@/globals';
 
 import { ResetPasswordForm } from './reset-password-form';
 
-export const dynamic = 'force-static';
-
-export default function ResetPasswordPage() {
+export default async function ResetPasswordPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocales }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background px-4">
       <FadeIn direction="up" className="z-10 w-full max-w-xl">

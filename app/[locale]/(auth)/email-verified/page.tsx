@@ -1,14 +1,19 @@
-'use client';
-
 import { ArrowRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
+import { AppLocales } from '@/globals';
+import { Link } from '@/i18n/navigation';
 
-export default function EmailVerifiedPage() {
-  const t = useTranslations('Auth.emailVerified');
-  const router = useRouter();
+export default async function EmailVerifiedPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocales }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const t = await getTranslations('Auth.emailVerified');
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background">
@@ -17,8 +22,9 @@ export default function EmailVerifiedPage() {
           <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
           <p className="text-muted-foreground">{t('description')}</p>
         </div>
-        <Button onClick={() => router.push('/app')} className="w-full" size="lg">
-          {t('cta')}
+
+        <Button className="w-full" size="lg">
+          <Link href={'/app'}>{t('cta')}</Link>
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>

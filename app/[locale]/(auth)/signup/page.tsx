@@ -1,14 +1,18 @@
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { FadeIn } from '@/components/index';
 import { Card, CardContent } from '@/components/ui/card';
+import { AppLocales } from '@/globals';
+import { Link } from '@/i18n/navigation';
 
 import { SignupForm } from './signup-form';
 
-export default function SignupPage() {
-  const t = useTranslations('Auth.signup');
-  const common = useTranslations('Auth.common');
+export default async function SignupPage({ params }: { params: Promise<{ locale: AppLocales }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const t = await getTranslations('Auth.signup');
+  const common = await getTranslations('Auth.common');
 
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background px-4">
@@ -38,7 +42,7 @@ export default function SignupPage() {
             <div className="mt-6 text-center text-sm text-muted-foreground">
               {t('haveAccount')}{' '}
               <Link
-                href="login"
+                href={'/login'}
                 className="font-bold text-primary transition-colors hover:text-primary/80"
               >
                 {t('loginLink')}

@@ -1,23 +1,23 @@
 'use client';
 
 import { Loader2, LogOut } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
+import { useSignOutMutation } from '@/hooks/useAuth';
+import { useRouter } from '@/i18n/navigation';
 
 export function LogoutButton({ className }: { className?: string }) {
-  const { signOut } = useAuth();
+  const router = useRouter();
+
+  const signOut = useSignOutMutation();
 
   const t = useTranslations('Auth.common');
-  const locale = useLocale();
-  const router = useRouter();
 
   const handleLogout = () => {
     signOut.mutate(undefined, {
       onSettled: () => {
-        router.replace(`/${locale}/login?session=expired`);
+        router.replace('/login?session=expired');
         router.refresh();
       },
     });

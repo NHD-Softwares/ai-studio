@@ -1,20 +1,23 @@
-import { redirect } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 
-import { authKeys } from '@/hooks/useAuth';
-import { authApi } from '@/lib/api/services/auth';
+import { AppLocales } from '@/globals';
+import { redirect } from '@/i18n/navigation';
+import { me } from '@/lib/api/services/auth';
 import { getQueryClient } from '@/lib/get-query-client';
 
 import { LogoutButton } from '../(auth)/components/logout';
 
-export default async function App({ params }: { params: Promise<{ locale: string }> }) {
+export default async function App({ params }: { params: Promise<{ locale: AppLocales }> }) {
   const { locale } = await params;
-  const queryClient = getQueryClient();
-  const data = await queryClient.query({ queryKey: authKeys.me, queryFn: authApi.me });
+  setRequestLocale(locale);
 
-  if (!data) redirect(`/${locale}/login?session=expired`);
+  const queryClient = getQueryClient();
+  const data = await queryClient.query({ queryKey: me.keys, queryFn: me.fn });
+
+  if (!data) redirect({ href: `/login?session=expired`, locale });
 
   if (!data?.user.emailVerified)
-    redirect(`/${locale}/verify?email=${encodeURIComponent(data.user.email)}`);
+    redirect({ href: `/verify?email=${encodeURIComponent(data?.user.email ?? '')}`, locale });
 
   return (
     <div>

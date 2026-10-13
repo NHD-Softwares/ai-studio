@@ -1,14 +1,13 @@
 'use client';
 
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useAuth } from '@/hooks/useAuth';
+import { useMeQuery, useResendVerificationMutation } from '@/hooks/useAuth';
+import { Link, useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
 const RESEND_COOLDOWN = 60;
@@ -19,7 +18,8 @@ interface CheckEmailCardProps {
 }
 
 export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps) {
-  const { resendVerification, refetchUser } = useAuth();
+  const { refetch: refetchUser } = useMeQuery();
+  const resendVerification = useResendVerificationMutation();
 
   const t = useTranslations('Auth.checkEmail');
   const router = useRouter();
@@ -61,7 +61,7 @@ export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps)
       className={cn('border-none bg-card/70 px-8 py-8 shadow-2xl backdrop-blur-2xl', className)}
     >
       <Link
-        href="login"
+        href={'/login'}
         className="group mb-6 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="mr-1.5 h-4 w-4 transition-transform group-hover:-translate-x-0.5 rtl:mr-0 rtl:ml-1.5 rtl:rotate-180 rtl:group-hover:translate-x-0.5" />
@@ -84,7 +84,7 @@ export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps)
               <p className="text-xs text-muted-foreground">
                 {t('wrongEmail')}{' '}
                 <Link
-                  href="signup"
+                  href={'/signup'}
                   className="font-semibold text-primary underline-offset-4 hover:underline"
                 >
                   {t('signUpAgain')}
@@ -133,9 +133,9 @@ export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps)
           </>
         ) : (
           <p className="text-sm leading-relaxed text-muted-foreground">
-            {t('noEmail')}{' '}
+            {t('noEmail')}
             <Link
-              href="signup"
+              href={'/signup'}
               className="font-semibold text-primary underline-offset-4 hover:underline"
             >
               {t('signUpAgain')}

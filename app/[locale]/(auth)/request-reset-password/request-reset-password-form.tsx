@@ -1,7 +1,6 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
@@ -9,12 +8,13 @@ import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '@/hooks/useAuth';
+import { useRequestPasswordResetMutation } from '@/hooks/useAuth';
+import { Link } from '@/i18n/navigation';
 
 const RESEND_COOLDOWN = 60;
 
 export function RequestResetForm() {
-  const { requestPasswordReset } = useAuth();
+  const requestPasswordReset = useRequestPasswordResetMutation();
 
   const t = useTranslations('Auth.requestResetPassword');
 
@@ -150,7 +150,7 @@ export function RequestResetForm() {
 
         <div className="mt-6 text-center">
           <Link
-            href="login"
+            href={'/login'}
             className="text-sm font-bold text-muted-foreground transition-colors hover:text-primary"
           >
             {t('backToLogin')}
