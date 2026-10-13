@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -8,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '@/hooks/useAuth';
+import { useSignUpMutation } from '@/hooks/useAuth';
+import { useRouter } from '@/i18n/navigation';
 
 import { PasswordInput } from '../components/password-input';
 
@@ -16,7 +16,7 @@ const inputClass =
   'h-12 border-border/50 bg-background/40 px-4 text-sm transition-all focus:border-primary focus:ring-1 focus:ring-primary';
 
 export function SignupForm() {
-  const { signUp } = useAuth();
+  const signUp = useSignUpMutation();
 
   const t = useTranslations('Auth.signup');
   const router = useRouter();
@@ -36,7 +36,7 @@ export function SignupForm() {
         isTermsAccepted,
       },
       {
-        onSuccess: () => router.push(`/verify?email=${encodeURIComponent(email)}`),
+        onSuccess: () => router.push(`/verify?email=${encodeURIComponent(email)}&source=signup`),
       }
     );
   };

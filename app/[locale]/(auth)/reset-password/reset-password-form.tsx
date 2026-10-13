@@ -1,20 +1,20 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '@/hooks/useAuth';
+import { useResetPasswordMutation } from '@/hooks/useAuth';
+import { Link, useRouter } from '@/i18n/navigation';
 
 import { PasswordInput } from '../components/password-input';
 
 export function ResetPasswordForm() {
-  const { resetPassword } = useAuth();
+  const resetPassword = useResetPasswordMutation();
 
   const t = useTranslations('Auth.resetPassword');
   const router = useRouter();
@@ -55,7 +55,7 @@ export function ResetPasswordForm() {
             asChild
             className="h-12 w-full bg-[#1A2B33] text-base font-bold text-white transition-all hover:bg-[#1A2B33]/90"
           >
-            <Link href="request-reset-password">{t('requestNewLink')}</Link>
+            <Link href={'/request-reset-password'}>{t('requestNewLink')}</Link>
           </Button>
         </CardContent>
       </>
@@ -114,7 +114,7 @@ export function ResetPasswordForm() {
         <div className="mt-6 text-center text-sm text-muted-foreground">
           {t('rememberPassword')}{' '}
           <Link
-            href="login"
+            href={'/login'}
             className="font-bold text-primary transition-colors hover:text-primary/80"
           >
             {t('loginLink')}

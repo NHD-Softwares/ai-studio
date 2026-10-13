@@ -2,66 +2,70 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { SignInResult } from '@/lib/api/services/auth';
-import { authApi } from '@/lib/api/services/auth';
+import type { SignInResult, SignUpResult } from '@/lib/api/services/auth';
+import {
+  me,
+  requestPasswordReset,
+  resendVerification,
+  resetPassword,
+  signIn,
+  signOut,
+  signUp,
+} from '@/lib/api/services/auth';
 
-export const authKeys = {
-  me: ['auth', 'me'] as const,
-};
-
-export function useAuth() {
-  const queryClient = useQueryClient();
-
-  const meQuery = useQuery({
-    queryKey: authKeys.me,
-    queryFn: authApi.me,
+export const useMeQuery = () =>
+  useQuery({
+    queryKey: me.keys,
+    queryFn: me.fn,
     staleTime: 5 * 60 * 1000,
-
     retry: false,
   });
 
-  const signUp = useMutation({
-    mutationFn: authApi.signUp,
-  });
+export const useSignInMutation = () => {
+  const queryClient = useQueryClient();
 
-  const signIn = useMutation({
-    mutationFn: authApi.signIn,
+  return useMutation({
+    mutationFn: signIn.fn,
     onSuccess: (data: SignInResult) => {
-      queryClient.setQueryData(authKeys.me, data.user);
+      queryClient.setQueryData(me.keys, data.user);
     },
   });
+};
 
-  const signOut = useMutation({
-    mutationFn: authApi.signOut,
+export const useSignUpMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: signUp.fn,
+    onSuccess: (data: SignUpResult) => {
+      queryClient.setQueryData(me.keys, data.user);
+    },
+  });
+};
+
+export const useSignOutMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: signOut.fn,
     onSettled: () => {
       queryClient.clear();
     },
   });
+};
 
-  const resendVerification = useMutation({
-    mutationFn: authApi.resendVerification,
+export const useResendVerificationMutation = () =>
+  useMutation({
+    mutationFn: resendVerification.fn,
   });
 
-  const requestPasswordReset = useMutation({
-    mutationFn: authApi.requestPasswordReset,
+export const useRequestPasswordResetMutation = () =>
+  useMutation({
+    mutationFn: requestPasswordReset.fn,
   });
 
-  const resetPassword = useMutation({
+export const useResetPasswordMutation = () =>
+  useMutation({
     mutationFn: ({ newPassword, token }: { newPassword: string; token: string }) =>
-      authApi.resetPassword({ newPassword }, token),
+      resetPassword.fn({ newPassword }, token),
   });
-
-  return {
-    user: meQuery.data ?? null,
-    isAuthenticated: !!meQuery.data,
-    isLoading: meQuery.isPending,
-    refetchUser: meQuery.refetch,
-
-    signUp,
-    signIn,
-    signOut,
-    resendVerification,
-    requestPasswordReset,
-    resetPassword,
-  };
-}

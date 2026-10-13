@@ -1,8 +1,6 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import Link from 'next/link';
-// import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -10,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '@/hooks/useAuth';
+import { useSignInMutation } from '@/hooks/useAuth';
+import { Link, useRouter } from '@/i18n/navigation';
 
 import { PasswordInput } from '../components/password-input';
 
@@ -18,10 +17,10 @@ const inputClass =
   'h-12 border-border/50 bg-background/40 px-4 text-sm transition-all focus:border-primary focus:ring-1 focus:ring-primary';
 
 export function LoginForm() {
-  const { signIn } = useAuth();
+  const signIn = useSignInMutation();
 
   const t = useTranslations('Auth.login');
-  // const router = useRouter();
+  const router = useRouter();
 
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -38,9 +37,12 @@ export function LoginForm() {
       },
       {
         onSuccess: ({ user }) => {
-          window.location.replace(
-            user.emailVerified ? '/app' : `/verify?email=${encodeURIComponent(email)}`
-          );
+          router.refresh();
+          if (!user.emailVerified) {
+            router.push(`/verify?email=${user.email}`);
+            return;
+          }
+          router.replace('/app');
         },
       }
     );
@@ -89,7 +91,7 @@ export function LoginForm() {
           </Label>
         </div>
         <Link
-          href="request-reset-password"
+          href={'request-reset-password'}
           className="text-xs font-medium text-primary transition-colors hover:text-primary/80"
         >
           {t('forgotPassword')}

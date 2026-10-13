@@ -33,7 +33,11 @@ export interface SignInResult {
   session: Session;
   token: string;
 }
-
+export interface SignUpResult {
+  user: User;
+  session: Session;
+  token: string;
+}
 export interface SignUpInput {
   name: string;
   email: string;
@@ -52,26 +56,38 @@ interface MessageResult {
   message: string;
 }
 
-export const authApi = {
-  signUp: (body: SignUpInput) => api.post('/auth/sign-up/email', body).then((r) => r.data),
+export const signUp = {
+  fn: (body: SignUpInput) => api.post('/auth/sign-up/email', body).then((r) => r.data),
+};
 
-  signIn: (body: SignInInput) =>
+export const signIn = {
+  fn: (body: SignInInput) =>
     api.post<SignInResult>('/auth/sign-in/email', body).then((r) => r.data),
+};
 
-  signOut: () => api.post<MessageResult>('/auth/sign-out').then((r) => r.data),
+export const signOut = {
+  fn: () => api.post<MessageResult>('/auth/sign-out').then((r) => r.data),
+};
 
-  resendVerification: (body: { email: string }) =>
+export const resendVerification = {
+  fn: (body: { email: string }) =>
     api.post<MessageResult>('/auth/resend-verification', body).then((r) => r.data),
+};
 
-  requestPasswordReset: (body: { email: string }) =>
+export const requestPasswordReset = {
+  fn: (body: { email: string }) =>
     api.post<MessageResult>('/auth/request-reset-password', body).then((r) => r.data),
+};
 
-  resetPassword: (body: { newPassword: string }, token: string) =>
+export const resetPassword = {
+  fn: (body: { newPassword: string }, token: string) =>
     api
       .post<MessageResult>('/auth/reset-password', body, { params: { token } })
       .then((r) => r.data),
+};
 
-  me: () =>
+export const me = {
+  fn: () =>
     api
       .get<MeResult>('/users/me')
       .then((r) => r.data)
@@ -79,4 +95,5 @@ export const authApi = {
         if (axios.isAxiosError(error) && error.response?.status === 401) return null;
         throw error;
       }),
+  keys: ['auth', 'me'] as const,
 };

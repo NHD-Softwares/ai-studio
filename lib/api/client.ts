@@ -3,7 +3,7 @@ import axios from 'axios';
 import { env } from '../env';
 
 export const api = axios.create({
-  baseURL: `${env.NEXT_PUBLIC_APP_URL}/api/v1`,
+  baseURL: `${env.NODE_ENV === 'development' ? env.NEXT_PUBLIC_API_URL : env.NEXT_PUBLIC_APP_URL}/api/v1`,
   withCredentials: true,
   timeout: 15_000,
 });

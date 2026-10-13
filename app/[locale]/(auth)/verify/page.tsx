@@ -7,19 +7,19 @@ import { CheckEmailCard } from './check-email-card';
 
 type Props = {
   params: Promise<{ locale: AppLocales }>;
-  searchParams?: Promise<{ email?: string }>;
+  searchParams?: Promise<{ email?: string; source?: 'signup' }>;
 };
 
 export default async function PleaseVerifyPage({ params, searchParams }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const email = searchParams ? (await searchParams).email : undefined;
+  const { email, source } = searchParams ? await searchParams : {};
 
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background px-4">
       <FadeIn direction="up" className="z-10 w-full max-w-xl">
-        <CheckEmailCard initialEmail={email} />
+        <CheckEmailCard initialEmail={email} source={source} />
       </FadeIn>
     </div>
   );
