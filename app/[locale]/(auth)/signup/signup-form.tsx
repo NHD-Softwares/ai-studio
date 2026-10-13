@@ -36,7 +36,7 @@ export function SignupForm() {
         isTermsAccepted,
       },
       {
-        onSuccess: () => router.push(`/verify?email=${encodeURIComponent(email)}`),
+        onSuccess: () => router.push(`/verify?email=${encodeURIComponent(email)}&source=signup`),
       }
     );
   };

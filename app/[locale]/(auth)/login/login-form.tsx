@@ -39,7 +39,7 @@ export function LoginForm() {
         onSuccess: ({ user }) => {
           router.refresh();
           if (!user.emailVerified) {
-            router.push('/verify');
+            router.push(`/verify?email=${user.email}`);
             return;
           }
           router.replace('/app');

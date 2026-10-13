@@ -1,12 +1,13 @@
 'use client';
 
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import { notFound } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useMeQuery, useResendVerificationMutation } from '@/hooks/useAuth';
+import { useMeQuery, useResendVerificationMutation, useSignOutMutation } from '@/hooks/useAuth';
 import { Link, useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
@@ -14,21 +15,26 @@ const RESEND_COOLDOWN = 60;
 
 interface CheckEmailCardProps {
   initialEmail?: string;
+  source?: 'signup';
   className?: string;
 }
 
-export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps) {
+export function CheckEmailCard({ initialEmail, source, className }: CheckEmailCardProps) {
   const { refetch: refetchUser } = useMeQuery();
   const resendVerification = useResendVerificationMutation();
+  const signOut = useSignOutMutation();
 
   const t = useTranslations('Auth.checkEmail');
   const router = useRouter();
 
   const email = initialEmail;
+  const initializeCountdown = source === 'signup' ? RESEND_COOLDOWN : 0;
 
-  const [countdown, setCountdown] = useState(email ? RESEND_COOLDOWN : 0);
+  const [countdown, setCountdown] = useState(initializeCountdown);
   const [isChecking, setIsChecking] = useState(false);
   const [notVerified, setNotVerified] = useState(false);
+
+  if (!email) notFound();
 
   useEffect(() => {
     if (countdown <= 0) return;
@@ -40,6 +46,15 @@ export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps)
     if (!email || countdown > 0 || resendVerification.isPending) return;
     setNotVerified(false);
     resendVerification.mutate({ email }, { onSuccess: () => setCountdown(RESEND_COOLDOWN) });
+  };
+
+  const handleBackToLogin = () => {
+    signOut.mutate(undefined, {
+      onSettled: () => {
+        router.replace('/login?session=expired');
+        router.refresh();
+      },
+    });
   };
 
   const handleCheckAgain = async () => {
@@ -60,13 +75,13 @@ export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps)
     <Card
       className={cn('border-none bg-card/70 px-8 py-8 shadow-2xl backdrop-blur-2xl', className)}
     >
-      <Link
-        href={'/login'}
-        className="group mb-6 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+      <p
+        onClick={handleBackToLogin}
+        className="group mb-6 inline-flex cursor-pointer items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="mr-1.5 h-4 w-4 transition-transform group-hover:-translate-x-0.5 rtl:mr-0 rtl:ml-1.5 rtl:rotate-180 rtl:group-hover:translate-x-0.5" />
         {t('backToLogin')}
-      </Link>
+      </p>
 
       <div className="mb-8 space-y-2 text-center md:text-start">
         <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -92,7 +107,9 @@ export function CheckEmailCard({ initialEmail, className }: CheckEmailCardProps)
               </p>
             </div>
 
-            <p className="text-sm leading-relaxed text-muted-foreground">{t('instructions')}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {source === 'signup' ? t('afterSignupInstructions') : t('generalInstructions')}
+            </p>
 
             <div aria-live="polite" className="min-h-5 text-sm">
               {notVerified && <p className="text-muted-foreground">{t('notVerifiedYet')}</p>}
