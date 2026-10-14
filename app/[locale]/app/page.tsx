@@ -1,11 +1,10 @@
 import { setRequestLocale } from 'next-intl/server';
 
+import { LogoutButton } from '@/components/auth/logout';
 import { AppLocales } from '@/globals';
 import { redirect } from '@/i18n/navigation';
 import { me } from '@/lib/api/services/auth';
 import { getQueryClient } from '@/lib/get-query-client';
-
-import { LogoutButton } from '../(auth)/components/logout';
 
 export default async function App({ params }: { params: Promise<{ locale: AppLocales }> }) {
   const { locale } = await params;
