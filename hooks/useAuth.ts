@@ -27,7 +27,7 @@ export const useSignInMutation = () => {
   return useMutation({
     mutationFn: signIn.fn,
     onSuccess: (data: SignInResult) => {
-      queryClient.setQueryData(me.keys, data.user);
+      queryClient.setQueryData(me.keys, { user: data.user, session: data.session });
     },
   });
 };
@@ -38,7 +38,7 @@ export const useSignUpMutation = () => {
   return useMutation({
     mutationFn: signUp.fn,
     onSuccess: (data: SignUpResult) => {
-      queryClient.setQueryData(me.keys, data.user);
+      queryClient.setQueryData(me.keys, { user: data.user, session: data.session });
     },
   });
 };
