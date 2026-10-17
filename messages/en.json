@@ -203,5 +203,22 @@
       "description": "You can now use the app to its full potential.",
       "cta": "Go to App"
     }
+  },
+  "Nav": {
+    "label": "Main navigation",
+    "logoLabel": "Visora, go to dashboard",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "viewProfile": "View profile",
+    "signOut": "Sign out",
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "toggleProjects": "Show or hide projects",
+    "createProject": "Create new project",
+    "creditsLeft": "Credits left",
+    "creditsAria": "{credits, number} of {total, number} credits left",
+    "managePlan": "Manage plan",
+    "help": "Help and support",
+    "settings": { "title": "Settings", "language": "Language" }
   }
 }

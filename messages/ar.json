@@ -203,5 +203,22 @@
       "description": "الآن يمكنك استخدام التطبيق بالكامل.",
       "cta": "اذهب للتطبيق"
     }
+  },
+  "Nav": {
+    "label": "التنقل الرئيسي",
+    "logoLabel": "Visora، الانتقال إلى لوحة التحكم",
+    "collapse": "طي الشريط الجانبي",
+    "expand": "توسيع الشريط الجانبي",
+    "viewProfile": "عرض الملف الشخصي",
+    "signOut": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم",
+    "projects": "المشاريع",
+    "toggleProjects": "إظهار المشاريع أو إخفاؤها",
+    "createProject": "إنشاء مشروع جديد",
+    "creditsLeft": "الرصيد المتبقي",
+    "creditsAria": "{credits, number} من {total, number} رصيد متبقٍ",
+    "managePlan": "إدارة الخطة",
+    "help": "المساعدة والدعم",
+    "settings": { "title": "الإعدادات", "language": "اللغة" }
   }
 }
