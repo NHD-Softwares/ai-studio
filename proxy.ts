@@ -21,18 +21,8 @@ function isUnder(path: string, base: string) {
   return path === base || path.startsWith(base + '/');
 }
 
-function clearSessionCookies(res: NextResponse) {
-  for (const name of SESSION_COOKIES) {
-    res.cookies.set(name, '', {
-      path: '/',
-      maxAge: 0,
-      secure: name.startsWith('__Secure-'),
-    });
-  }
-}
-
 export default function proxy(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl;
+  const { pathname } = request.nextUrl;
   const { locale, path } = splitLocale(pathname);
 
   if (!locale) return intlMiddleware(request);
@@ -45,12 +35,6 @@ export default function proxy(request: NextRequest) {
   }
 
   if (AUTH_ROUTES.some((r) => isUnder(path, r))) {
-    if (searchParams.get('session') === 'expired') {
-      const res = intlMiddleware(request);
-      clearSessionCookies(res);
-      return res;
-    }
-
     if (hasSession) {
       return NextResponse.redirect(new URL(`/${locale}/app`, request.url));
     }

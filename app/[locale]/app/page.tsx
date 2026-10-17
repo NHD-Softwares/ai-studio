@@ -11,12 +11,14 @@ export default async function App({ params }: { params: Promise<{ locale: AppLoc
   setRequestLocale(locale);
 
   const queryClient = getQueryClient();
+
   const data = await queryClient.query({ queryKey: me.keys, queryFn: me.fn });
 
   if (!data) redirect({ href: `/login?session=expired`, locale });
 
-  if (!data?.user.emailVerified)
-    redirect({ href: `/verify?email=${encodeURIComponent(data?.user.email ?? '')}`, locale });
+  if (!data?.user?.emailVerified) {
+    redirect({ href: `/verify?email=${encodeURIComponent(data?.user?.email ?? '')}`, locale });
+  }
 
   return (
     <div>

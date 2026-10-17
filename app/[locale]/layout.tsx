@@ -19,6 +19,7 @@ const cairo = Cairo({
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: AppLocales }> }) {
   const { locale } = await params;
+  // eslint-disable-next-line local/require-set-request-locale
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return {
