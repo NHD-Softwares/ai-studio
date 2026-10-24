@@ -1,6 +1,5 @@
 import { setRequestLocale } from 'next-intl/server';
 
-import { LogoutButton } from '@/components/auth/logout';
 import { AppLocales } from '@/globals';
 import { redirect } from '@/i18n/navigation';
 import { me } from '@/lib/api/services/auth';
@@ -21,9 +20,8 @@ export default async function App({ params }: { params: Promise<{ locale: AppLoc
   }
 
   return (
-    <div>
-      <h1>App</h1>
-      <LogoutButton />
+    <div className="flex h-full items-center justify-center">
+      <h1>Welcome to Ai Studio, The app is still in early development phase</h1>
     </div>
   );
 }

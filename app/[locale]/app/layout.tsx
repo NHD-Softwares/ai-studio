@@ -14,9 +14,9 @@ export default async function layout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <div className="flex h-lvh w-full flex-row">
       <Nav />
-      {children}
-    </>
+      <div className="my-5 ml-5 h-full w-full">{children}</div>
+    </div>
   );
 }

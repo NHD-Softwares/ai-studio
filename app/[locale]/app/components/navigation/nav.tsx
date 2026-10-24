@@ -12,7 +12,6 @@ import { NavHeader } from './nav-header';
 import { NavItem } from './nav-item';
 import { NavLinks } from './nav-links';
 import { Profile } from './profile';
-import { SettingsMenu } from './settings-menu';
 import { ProfileSkeleton } from './skeletons/profile-skeleton';
 
 const MOCK_CREDITS = { credits: 120, total: 200 };
@@ -27,7 +26,7 @@ export const Nav = () => {
   return (
     <aside
       className={cn(
-        'flex h-dvh shrink-0 flex-col gap-5 border-e border-sidebar-border bg-sidebar p-3 text-sidebar-foreground',
+        'mr-5 flex h-dvh shrink-0 flex-col gap-5 border-e border-sidebar-border bg-sidebar p-3 text-sidebar-foreground',
         'transition-[width] duration-200',
         collapsed ? 'w-16 items-center' : 'w-66'
       )}
@@ -51,7 +50,6 @@ export const Nav = () => {
           <div className={cn(!collapsed && 'flex-1')}>
             <NavItem href="/help" icon={CircleHelp} label={t('help')} collapsed={collapsed} />
           </div>
-          <SettingsMenu />
         </div>
       </div>
     </aside>

@@ -9,8 +9,8 @@ export function Header() {
         <Logo collapsed={false} href="/" />
 
         <div className="flex items-center gap-2">
-          <LanguageSwitcher />
-          <div className="h-[18px] w-px bg-border" />
+          <LanguageSwitcher variant="minimal" />
+          <div className="h-4.5 w-px bg-border" />
           <ToggleTheme />
         </div>
       </nav>
