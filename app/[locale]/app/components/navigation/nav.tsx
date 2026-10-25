@@ -14,7 +14,7 @@ import { NavLinks } from './nav-links';
 import { Profile } from './profile';
 import { ProfileSkeleton } from './skeletons/profile-skeleton';
 
-const MOCK_CREDITS = { credits: 120, total: 200 };
+const MOCK_CREDITS = { credits: 0, total: 200 };
 
 export const Nav = () => {
   const t = useTranslations('Nav');
@@ -26,7 +26,7 @@ export const Nav = () => {
   return (
     <aside
       className={cn(
-        'mr-5 flex h-dvh shrink-0 flex-col gap-5 border-e border-sidebar-border bg-sidebar p-3 text-sidebar-foreground',
+        'sticky top-0 flex h-screen shrink-0 flex-col gap-5 border-e border-sidebar-border bg-sidebar p-3 text-sidebar-foreground',
         'transition-[width] duration-200',
         collapsed ? 'w-16 items-center' : 'w-66'
       )}
