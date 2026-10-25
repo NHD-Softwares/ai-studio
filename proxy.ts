@@ -22,10 +22,37 @@ function isUnder(path: string, base: string) {
 }
 
 export default function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
   const { locale, path } = splitLocale(pathname);
 
   if (!locale) return intlMiddleware(request);
+
+  if (
+    (pathname.endsWith('/login') || pathname.endsWith('/login/')) &&
+    searchParams.get('session') === 'expired'
+  ) {
+    const response = NextResponse.redirect(new URL(pathname, request.url));
+
+    const cookieNames = [
+      'better-auth.session_token',
+      'better-auth.session_data',
+      'better-auth.dont_remember',
+      '__Secure-better-auth.session_token',
+      '__Secure-better-auth.session_data',
+    ];
+
+    for (const name of cookieNames) {
+      response.cookies.set({
+        name,
+        value: '',
+        path: '/',
+        expires: new Date(0),
+        maxAge: 0,
+      });
+    }
+
+    return response;
+  }
 
   const hasSession = SESSION_COOKIES.some((n) => request.cookies.has(n));
 
@@ -35,7 +62,9 @@ export default function proxy(request: NextRequest) {
   }
 
   if (AUTH_ROUTES.some((r) => isUnder(path, r))) {
-    if (hasSession) {
+    const isExpiredSession = request.nextUrl.searchParams.get('session') === 'expired';
+
+    if (hasSession && !isExpiredSession) {
       return NextResponse.redirect(new URL(`/${locale}/app`, request.url));
     }
   }
