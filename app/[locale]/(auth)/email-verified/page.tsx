@@ -23,7 +23,7 @@ export default async function EmailVerifiedPage({
           <p className="text-muted-foreground">{t('description')}</p>
         </div>
 
-        <Button className="w-full" size="lg">
+        <Button asChild className="w-full" size="lg">
           <Link href={'/app'}>{t('cta')}</Link>
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
