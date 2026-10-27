@@ -48,6 +48,7 @@ export default function proxy(request: NextRequest) {
         path: '/',
         expires: new Date(0),
         maxAge: 0,
+        secure: name.startsWith('__Secure-'),
       });
     }
 
