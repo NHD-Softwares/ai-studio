@@ -5,7 +5,7 @@ import { redirect } from '@/i18n/navigation';
 import { me } from '@/lib/api/services/auth';
 import { getQueryClient } from '@/lib/get-query-client';
 
-import { Nav } from './components/navigation/nav';
+import { AppShell } from './components/app-shell';
 
 interface Props {
   children: React.ReactNode;
@@ -27,10 +27,5 @@ export default async function layout({ children, params }: Props) {
     return redirect({ href: '/login?session=expired', locale });
   }
 
-  return (
-    <div className="flex min-h-screen w-full">
-      <Nav />
-      <main className="my-5 ml-5 min-w-0 flex-1">{children}</main>
-    </div>
-  );
+  return <AppShell>{children}</AppShell>;
 }

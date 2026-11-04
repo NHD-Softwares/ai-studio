@@ -18,6 +18,8 @@ export const Projects = ({ collapsed }: { collapsed: boolean }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(true);
 
+  const showProjects = !collapsed && open;
+
   return (
     <div>
       <div className="flex items-center gap-1">
@@ -35,40 +37,51 @@ export const Projects = ({ collapsed }: { collapsed: boolean }) => {
             className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-sidebar-accent"
           >
             <ChevronDown
-              className={cn('size-4 transition-transform', !open && '-rotate-90 rtl:rotate-90')}
+              className={cn(
+                'size-4 transition-transform duration-200',
+                !open && '-rotate-90 rtl:rotate-90'
+              )}
             />
           </button>
         )}
       </div>
 
-      {/* In the collapsed sidebar the list is hidden: icons only. */}
-      {!collapsed && open && (
-        <ul
-          id="nav-projects-list"
-          className="ms-5 mt-1 flex flex-col gap-0.5 border-s border-sidebar-border ps-3"
-        >
-          {MOCK_PROJECTS.map((project) => {
-            const href = `/projects/${project.id}`;
-            const isActive = pathname === href;
+      <div
+        className={cn(
+          'grid transition-[grid-template-rows] duration-200 ease-in-out',
+          showProjects ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        )}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <ul
+            id="nav-projects-list"
+            aria-hidden={!showProjects}
+            inert={!showProjects}
+            className="ms-5 mt-1 flex flex-col gap-0.5 border-s border-sidebar-border ps-3"
+          >
+            {MOCK_PROJECTS.map((project) => {
+              const href = `/projects/${project.id}`;
+              const isActive = pathname === href;
 
-            return (
-              <li key={project.id}>
-                <Link
-                  href={href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={cn(
-                    'block truncate rounded-lg px-2 py-1.5 text-[13px] text-muted-foreground transition-colors',
-                    'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                    isActive && 'text-sidebar-foreground'
-                  )}
-                >
-                  {project.name}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+              return (
+                <li key={project.id}>
+                  <Link
+                    href={href}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={cn(
+                      'block truncate rounded-lg px-2 py-1.5 text-[13px] text-muted-foreground transition-colors',
+                      'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+                      isActive && 'text-sidebar-foreground'
+                    )}
+                  >
+                    {project.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
